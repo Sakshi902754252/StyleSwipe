@@ -8,6 +8,7 @@ const UploadPage = () => {
   const [productLink, setProductLink] = useState('');
   const [gender, setGender] = useState('');
   const [category, setCategory] = useState('');
+  const [likeCount, setLikeCount] = useState(0);
   const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -18,6 +19,8 @@ const UploadPage = () => {
         productLink,
         gender,
         category,
+        likeCount
+
         // You might want to handle file upload separately and store the URL here
         // fileUrl: await uploadFile(file),
       });
