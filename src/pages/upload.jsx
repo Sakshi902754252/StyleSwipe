@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './upload.css';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const UploadPage = () => {
   const [productLink, setProductLink] = useState('');
@@ -8,10 +10,32 @@ const UploadPage = () => {
   const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitted:', { productLink, gender, category, file });
+    try {
+      // Create a new document in the 'items' collection
+      const docRef = await addDoc(collection(db, 'items'), {
+        productLink,
+        gender,
+        category,
+        // You might want to handle file upload separately and store the URL here
+        // fileUrl: await uploadFile(file),
+      });
+      console.log("Document written with ID: ", docRef.id);
+      
+      // Clear the form after successful submission
+      setProductLink('');
+      setGender('');
+      setCategory('');
+      setFile(null);
+      
+      // You might want to show a success message to the user here
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      // You might want to show an error message to the user here
+    }
   };
+
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
