@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -208,6 +209,7 @@ function LandingPage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+  const navigate = useNavigate();
 
   const typedText = useTypingEffect("Welcome to StyleSwipe....");
 
@@ -258,6 +260,10 @@ function LandingPage() {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const handleGetStartedClick = () => {
+    navigate('/signup');
+  };
+
   return (
     <Container>
       <MainContent>
@@ -275,7 +281,9 @@ function LandingPage() {
             <PlayIcon />
           </PlayButton>
         </SubtitleAndPlayWrapper>
-        <Button type="submit">Get Started</Button>
+        <Button type="submit" onClick={handleGetStartedClick}>
+          Get Started
+        </Button>
       </MainContent>
       <VideoWrapper show={showVideo} onClick={handleVideoWrapperClick}>
         <VideoContainer>

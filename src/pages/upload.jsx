@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './upload.css';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const UploadPage = () => {
   const [productLink, setProductLink] = useState('');
@@ -10,19 +12,26 @@ const UploadPage = () => {
   const [category, setCategory] = useState('');
   const [likeCount, setLikeCount] = useState(0);
   const [file, setFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Upload the file to Firebase Storage and get the download URL
+      let imageUrl = '';
+      if (file) {
+        const storageRef = ref(storage, `images/${file.name}`);
+        await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
       // Create a new document in the 'items' collection
       const docRef = await addDoc(collection(db, 'items'), {
         productLink,
         gender,
         category,
-        likeCount
-
-        // You might want to handle file upload separately and store the URL here
-        // fileUrl: await uploadFile(file),
+        likeCount,
+        imageUrl,
       });
       console.log("Document written with ID: ", docRef.id);
       
@@ -31,14 +40,15 @@ const UploadPage = () => {
       setGender('');
       setCategory('');
       setFile(null);
+
+      // Redirect to /swipe
+      navigate('/swipe');
       
-      // You might want to show a success message to the user here
     } catch (error) {
       console.error("Error adding document: ", error);
       // You might want to show an error message to the user here
     }
   };
-
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -115,6 +125,7 @@ const UploadPage = () => {
             className="continue-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            
           >
             Continue
           </motion.button>

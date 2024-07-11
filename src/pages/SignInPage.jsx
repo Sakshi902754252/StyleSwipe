@@ -56,7 +56,7 @@ const SignInPage = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('Signed in user:', userCredential.user);
-      navigate('/'); // Redirect to home page after successful sign in
+      navigate('/upload'); // Redirect to home page after successful sign in
 
     } catch (error) {
       console.error('Error signing in:', error);
@@ -75,7 +75,7 @@ const SignInPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2>{isSignUp ? 'Create Account' : 'Welcome To StyleSwipe'}</h2>
+          <h2>{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
           <form onSubmit={isSignUp ? handleSignUp : handleSubmit}>
             {isSignUp && (
               <motion.input
