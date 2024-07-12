@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import './SignInPage.css';
 import { collection, addDoc } from 'firebase/firestore';
@@ -38,11 +39,15 @@ const SignInPage = () => {
       setName('');
       setPassword('');
 
+      // Show success alert
+      toast.success('Account created successfully.');
+
       // Set sign-up mode to false to prompt for sign-in
       setIsSignUp(false);
 
     } catch (error) {
       console.error('Error signing up:', error);
+      toast.error('Error creating account.');
     }
   };
 
@@ -55,11 +60,15 @@ const SignInPage = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Signed in user:', userCredential.user);
-      navigate('/upload'); // Redirect to home page after successful sign in
+      console.log('Logged in user:', userCredential.user);
+
+      toast.success('Logged in successfully.');
+
+      navigate('/upload');
 
     } catch (error) {
       console.error('Error signing in:', error);
+      toast.error('Incorrect Credentials! Please try again.');
     }
   };
 
@@ -101,12 +110,12 @@ const SignInPage = () => {
               whileFocus={{ scale: 1.05 }}
             />
             <motion.button type="submit" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              {isSignUp ? 'Sign Up' : 'Sign In'}
+              {isSignUp ? 'Sign Up' : 'Log In'}
             </motion.button>
           </form>
           <p>
             {isSignUp
-              ? 'Signed up successfully! Please sign in to continue.'
+              ? 'Please log in to continue.'
               : "Don't have an account?"}
             <motion.span
               className="toggle-sign"
@@ -114,7 +123,7 @@ const SignInPage = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              {isSignUp ? ' SignIn' : ' Sign Up'}
+              {isSignUp ? ' Log In' : ' Sign Up'}
             </motion.span>
           </p>
         </motion.div>

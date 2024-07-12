@@ -7,6 +7,7 @@ import LandingPage from './pages/Landing.jsx';
 import MediaCard from './pages/Swipe.jsx';
 import Topcategories from './pages/TopCategories.jsx';
 import Leaderboard from './pages/Leaderboard.jsx';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function Main() {
   return (
     <div className="App">
       {!hideNavbar && <Navbar />}
+      <Toaster />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/upload" element={<UploadPage />} />

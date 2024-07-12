@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './upload.css';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Import serverTimestamp
@@ -151,6 +151,19 @@ const UploadPage = () => {
             whileTap={{ scale: 0.95 }}
           >
             Continue
+          </motion.button>
+          <div className="or-option">
+            <hr className="or-line" />
+            <span>Or</span>
+            <hr className="or-line" />
+          </div>
+          <motion.button 
+            type="submit" 
+            className="game-btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Enter Style Swipe!!
           </motion.button>
         </motion.form>
       </motion.main>
