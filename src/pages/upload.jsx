@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './upload.css';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Import serverTimestamp
 import { db, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const UploadPage = () => {
   const [productLink, setProductLink] = useState('');
@@ -12,7 +13,27 @@ const UploadPage = () => {
   const [category, setCategory] = useState('');
   const [likeCount, setLikeCount] = useState(0);
   const [file, setFile] = useState(null);
+  const [user, setUser] = useState(null);
+  const [name, setName] = useState('');
+  const [uid, setUid] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch user data when component mounts
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in.
+        setUser(user);
+        console.log(user.name);
+      } else {
+        // User is signed out.
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,14 +45,17 @@ const UploadPage = () => {
         await uploadBytes(storageRef, file);
         imageUrl = await getDownloadURL(storageRef);
       }
-
-      // Create a new document in the 'items' collection
+      
+      // Create a new document in the 'items' collection with server timestamp
       const docRef = await addDoc(collection(db, 'items'), {
         productLink,
         gender,
         category,
         likeCount,
         imageUrl,
+        uid: user.uid,
+        name: user.displayName,
+        timestamp: serverTimestamp(), // Add server timestamp
       });
       console.log("Document written with ID: ", docRef.id);
       
@@ -125,7 +149,6 @@ const UploadPage = () => {
             className="continue-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            
           >
             Continue
           </motion.button>
