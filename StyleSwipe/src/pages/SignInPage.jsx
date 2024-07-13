@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import './SignInPage.css';
-import { collection, addDoc } from 'firebase/firestore';
+import {  doc, setDoc, collection, addDoc, getDoc, updateDoc, arrayUnion} from 'firebase/firestore';
 import { db, auth } from '../firebase';
+import axios from 'axios';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const SignInPage = () => {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -50,6 +52,72 @@ const SignInPage = () => {
       toast.error('Error creating account.');
     }
   };
+
+  const handleInstagramLogin = async () => {
+    setIsLoading(true);
+    const accessToken = process.env.REACT_APP_INSTAGRAM_ACCESS_TOKEN;
+
+
+    try {
+      // Fetch user data from Instagram
+      const userDataResponse = await axios.get(`https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`);
+      const userData = userDataResponse.data;
+
+      console.log("Instagram user data:", userData);
+
+      const userRef = doc(db, 'users', userData.id);
+      const docSnap = await getDoc(userRef);
+
+      if (!docSnap.exists()) {
+        // Create the document if it does not exist
+        await setDoc(userRef, {
+          instagramId: userData.id,
+          username: userData.username,
+          accessToken: accessToken,
+          media: [], // Initialize media array
+        });
+        console.log("Document created with ID: ", userData.id);
+      } else {
+        // Update the document if it exists
+        await updateDoc(userRef, {
+          instagramId: userData.id,
+          username: userData.username,
+          accessToken: accessToken
+        });
+        console.log("Document updated with ID: ", userData.id);
+      }
+
+      // Fetch recent media from Instagram
+      const mediaResponse = await axios.get(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url&access_token=${accessToken}`);
+      const recentMedia = mediaResponse.data.data;
+
+      console.log("Recent media:", recentMedia);
+
+      // Save media data to Firestore
+      const mediaUrls = recentMedia.map(media => media.media_url);
+      await updateDoc(userRef, {
+        media: arrayUnion(...mediaUrls)
+      });
+
+      console.log("Media data saved to Firestore");
+
+      // Navigate to the upload page
+      navigate('/upload', { 
+        state: { 
+          instagramId: userData.id,
+          username: userData.username,
+          recentMedia 
+        } 
+      });
+
+    } catch (error) {
+      console.error("Error fetching Instagram data:", error);
+      alert("An error occurred while fetching your Instagram data. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,6 +181,16 @@ const SignInPage = () => {
               {isSignUp ? 'Sign Up' : 'Log In'}
             </motion.button>
           </form>
+          <motion.button
+            className="instagram-login-btn"
+            onClick={handleInstagramLogin}
+            style={{ marginLeft: '75px' }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Login with Instagram'}
+          </motion.button>
           <p>
             {isSignUp
               ? 'Please log in to continue.'

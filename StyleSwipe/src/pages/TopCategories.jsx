@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./TopCategories.css";
 import { db } from "../firebase";
-import { collection, getDocs, query, orderBy, Timestamp } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons"; 
+import { faShoppingBag,  faTimes,  faTags, faGift, faStar, } from "@fortawesome/free-solid-svg-icons"; 
 
 function TopCategories() {
   const [products, setProducts] = useState([]);
+  const [recommendation, setRecommendation] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -23,6 +24,34 @@ function TopCategories() {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    const fetchRecommendation = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_id: '7709483635845058' }), // Replace with actual user ID
+        });
+        const data = await response.json();
+        if (data.recommendations && data.recommendations.length > 0) {
+          setRecommendation(data.recommendations[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching recommendation:', error);
+      }
+    };
+
+    const intervalId = setInterval(fetchRecommendation, 10000); // Fetch every minute
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleCloseRecommendation = () => {
+    setRecommendation(null);
+  };
 
   return (
     <div className="page">
@@ -63,6 +92,32 @@ function TopCategories() {
           </main>
         </div>
       </div>
+      {recommendation && (
+        <div className="recommendation-overlay">
+          <div className="recommendation-popup">
+            <button className="close-button" onClick={() => handleCloseRecommendation()}>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+            <div className="popup-content">
+              <h3>Hey Sakshi,</h3>
+              <p>your Instagram style is amazing! We think you'll love this.
+              <div className="popup-icon">
+                <FontAwesomeIcon icon={faShoppingBag} />
+              </div>
+              </p>
+              <h4>{recommendation.name}</h4>
+              <div className="feature-icons">
+                <FontAwesomeIcon icon={faTags} />
+                <FontAwesomeIcon icon={faGift} />
+                <FontAwesomeIcon icon={faStar} />
+              </div>
+              <a href={recommendation.image_urls[0]} target="_blank" rel="noopener noreferrer" className="view-item-button">
+                Explore Now
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
