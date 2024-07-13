@@ -4,6 +4,7 @@ from models.style_analyzer import StyleAnalyzer
 from models.recommender import Recommender
 from utils.firebase_utils import fetch_media_from_firebase
 from flask_cors import CORS
+import logging
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -54,3 +55,6 @@ def analyze_user_style():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+logging.info("Server is up and running. Visit http://127.0.0.1:5000 to check the application.")
