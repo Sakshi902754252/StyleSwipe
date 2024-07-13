@@ -20,7 +20,11 @@ const MainContent = styled.div`
   justify-content: center;
   flex-grow: 1;
   text-align: left;
-  padding-left: 5%;
+  padding: 5%;
+
+  @media (max-width: 768px) {
+    padding: 10% 5%;
+  }
 `;
 
 const PlayButton = styled.button`
@@ -39,6 +43,11 @@ const PlayButton = styled.button`
   left: 32rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 1024px) {
+    position: static;
+    margin-top: 1rem;
+  }
 
   &:hover {
     background-color: #f8f8f8;
@@ -64,6 +73,10 @@ const MainSubtitle = styled.p`
   font-weight: bold;
   margin-bottom: 6px;
   margin-left: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const SubSubtitle = styled.p`
@@ -73,29 +86,23 @@ const SubSubtitle = styled.p`
   max-width: 500px;
   line-height: 1.4;
   text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    max-width: 100%;
+  }
 `;
 
 const SubtitleAndPlayWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 12px;
-`;
 
-// const Button = styled.button`
-//   padding: 10px 20px;
-//   border: none;
-//   border-radius: 3px;
-//   cursor: pointer;
-//   font-size: 14px;
-//   margin-left: 0.6rem;
-//   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-//   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-//   &:hover {
-//   background-color: white;
-//   color: black;
-//   transform: scale(1.05);
-// }
-// `;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
 
 const Button = styled.button`
   padding: 12px 24px;
@@ -111,6 +118,12 @@ const Button = styled.button`
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
   text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-top: 1rem;
+    width: 100%;
+  }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
@@ -138,8 +151,8 @@ const VideoWrapper = styled.div`
 `;
 
 const Video = styled.video`
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 90%;
+  max-height: 90%;
   position: relative;
 `;
 
@@ -149,13 +162,18 @@ const Title = styled.h2`
   font-weight: normal;
   height: 60px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    height: auto;
+  }
 `;
 
 const VideoControls = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 11rem;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   height: 15px;
   padding: 10px;
@@ -166,6 +184,8 @@ const VideoControls = styled.div`
 const VideoContainer = styled.div`
   position: relative;
   display: inline-block;
+  width: 90%;
+  max-width: 1000px;
 `;
 
 const ControlButton = styled.button`
