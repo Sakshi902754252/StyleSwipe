@@ -5,9 +5,10 @@
 /.pnp
 .pnp.js
 /credentials
-.env
+.envx
 /Lib
 /Include
+
 /Scripts
 
 # testing
