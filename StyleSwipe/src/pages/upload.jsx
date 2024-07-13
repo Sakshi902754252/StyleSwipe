@@ -25,7 +25,7 @@ const UploadPage = () => {
       if (user) {
         // User is signed in.
         setUser(user);
-        console.log(user.name);
+        console.log(user);
       } else {
         // User is signed out.
         setUser(null);
@@ -143,6 +143,7 @@ const UploadPage = () => {
             <option value="tops">Tops</option>
             <option value="bottoms">Bottoms</option>
             <option value="dresses">Dresses</option>
+            <option value="dresses">Saree</option>
           </select>
           <motion.button 
             type="submit" 

@@ -8,6 +8,7 @@
 .env
 /Lib
 /Include
+/Scripts
 
 # testing
 /coverage

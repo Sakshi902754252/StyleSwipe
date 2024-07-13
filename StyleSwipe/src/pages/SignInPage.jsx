@@ -5,7 +5,7 @@ import './SignInPage.css';
 import {  doc, setDoc, collection, addDoc, getDoc, updateDoc, arrayUnion} from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import axios from 'axios';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
@@ -27,12 +27,17 @@ const SignInPage = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      await updateProfile(user, {
+        displayName: name
+      });
+
       // Save user details in Firestore (optional)
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
         name,
         email,
       });
+      console.log("name is ....", name);
 
       console.log("Document written with ID: ", user.uid);
 
@@ -129,6 +134,7 @@ const SignInPage = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('Logged in user:', userCredential.user);
+      
 
       toast.success('Logged in successfully.');
 
@@ -141,73 +147,70 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="signin-page">
-      <div className="content-wrapper">
-        <div className="image-container">
-          <img src="/shopping.jpg" alt="Shopping illustration" />
-        </div>
-        <motion.div
-          className="signin-container"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2>{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
-          <form onSubmit={isSignUp ? handleSignUp : handleSubmit}>
-            {isSignUp && (
-              <motion.input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                whileFocus={{ scale: 1.05 }}
-              />
-            )}
-            <motion.input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              whileFocus={{ scale: 1.05 }}
-            />
-            <motion.input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              whileFocus={{ scale: 1.05 }}
-            />
-            <motion.button type="submit" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              {isSignUp ? 'Sign Up' : 'Log In'}
-            </motion.button>
-          </form>
-          <motion.button
-            className="instagram-login-btn"
-            onClick={handleInstagramLogin}
-            style={{ marginLeft: '75px' }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Loading...' : 'Login with Instagram'}
-          </motion.button>
-          <p>
-            {isSignUp
-              ? 'Please log in to continue.'
-              : "Don't have an account?"}
-            <motion.span
-              className="toggle-sign"
-              onClick={() => setIsSignUp(!isSignUp)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {isSignUp ? ' Log In' : ' Sign Up'}
-            </motion.span>
-          </p>
-        </motion.div>
+  <div className="signin-page">
+    <div className="content-wrapper">
+      <div className="image-container">
+        <img src="/shopping.jpg" alt="Shopping illustration" />
       </div>
+      <motion.div
+        className="signin-container"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h2>{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
+        <form onSubmit={isSignUp ? handleSignUp : handleSubmit}>
+          {isSignUp && (
+            <motion.input
+              type="text"
+              placeholder="User Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              whileFocus={{ scale: 1.05 }}
+            />
+          )}
+          <motion.input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            whileFocus={{ scale: 1.05 }}
+          />
+          <motion.input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            whileFocus={{ scale: 1.05 }}
+          />
+          <motion.button type="submit" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            {isSignUp ? 'Sign Up' : 'Log In'}
+          </motion.button>
+        </form>
+        <motion.button
+          className="instagram-login-btn"
+          onClick={handleInstagramLogin}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Login with Instagram'}
+        </motion.button>
+        <p>
+          {isSignUp ? 'Please log in to continue.' : "Don't have an account?"}
+          <motion.span
+            className="toggle-sign"
+            onClick={() => setIsSignUp(!isSignUp)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {isSignUp ? ' Log In' : ' Sign Up'}
+          </motion.span>
+        </p>
+      </motion.div>
     </div>
-  );
+  </div>
+);
 };
 
 export default SignInPage;
