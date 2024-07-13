@@ -10,7 +10,7 @@
 /Include
 
 /Scripts
-
+__pycache__/
 # testing
 /coverage
 
