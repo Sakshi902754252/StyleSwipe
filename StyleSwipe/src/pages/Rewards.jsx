@@ -32,8 +32,8 @@ const Rewards = () => {
       
       users.sort((a, b) => b.likeCount - a.likeCount);
       
-      // const userRank = users.findIndex((user) => user.uid === userId) + 1;
-      const userRank = 7;
+       const userRank = users.findIndex((user) => user.uid === userId) + 1;
+      // const userRank = 7;
       console.log(userRank);
       setRank(userRank);
       
