@@ -187,6 +187,13 @@ const SignInPage = () => {
             {isSignUp ? 'Sign Up' : 'Log In'}
           </motion.button>
         </form>
+
+        <div className="or-option">
+          <hr className="or-line" />
+          <span>Or</span>
+          <hr className="or-line" />
+        </div>
+
         <motion.button
           className="instagram-login-btn"
           onClick={handleInstagramLogin}

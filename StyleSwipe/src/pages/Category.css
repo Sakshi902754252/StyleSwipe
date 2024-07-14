@@ -1,0 +1,165 @@
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+  }
+  
+  .apps {
+    max-width: 500px;
+    margin: 6% auto 80%;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+  }
+  
+
+   /* Category.css */
+
+.div {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .link1{
+    color: black;
+    text-decoration: none;
+    font-size: 0.6rem;
+  }
+  .rankings {
+    margin-left: 0.8rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+ 
+  .blinking-texts {
+    font-size: 1.2em;
+    color: #dc3545;
+    animation: blinkingText 1.2s infinite;
+  }
+  
+  @keyframes blinkingText {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  
+
+  .apps h4{
+    font-size: 1.1rem;
+    margin-left: 1.3rem;
+  }
+
+  .categories-page {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contents {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    border-radius: 0;
+    margin-bottom: 4rem;
+  }
+  
+  .posts-container {
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+
+  .back::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .back {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
+  }
+  
+  .back-button{
+    margin-right: 0.4rem;
+    background-color:white;
+    color: black;
+    font-size: 1.5rem;
+  }
+  
+  .posts {
+    background-color: #fcfcfc;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .users-info {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 2.5rem;
+  }
+  
+  .users-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 0.4rem;
+  }
+  
+  .name {
+    flex-grow: 1;
+    font-weight: bold;
+  }
+  
+  .posts-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: -0.5rem;
+  }
+  
+  .post-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+  }
+  
+  .categories {
+    font-size: 1rem;
+    color: #555;
+    font-weight: bold;
+    margin-left: 0.8rem;
+    margin-top: 0.4rem;
+  }
+  
+  .like-section {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0;
+  }
+  
+  .like-icon {
+    margin-right:1rem;
+    color: #ff6370;
+  }
+  
+  .like-count {
+    font-size: 16px;
+    color: #555;
+    margin-top: 0.3rem;
+    margin-right: 1rem;
+  }
+  
+  .shoppingBag {
+    color: #928b8b;
+    height: 1.3rem;
+    margin-right: 0.7rem;
+  }
+  

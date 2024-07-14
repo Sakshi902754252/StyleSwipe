@@ -1,4 +1,3 @@
-/* Navbar.css */
 .navbar {
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -113,4 +112,41 @@
   .nav-link, .nav-button {
     font-size: 0.8rem;
   }
+}
+
+.nav-link.nav-button {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: none; /* Initially hidden */
+  flex-direction: column;
+  width: 150px;
+  /* margin-top: 0.5rem; */
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: black;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Show dropdown when the parent is hovered */
+.nav-link.nav-button:hover .dropdown-menu,
+.nav-link.nav-button.dropdown-open .dropdown-menu {
+  display: flex;
 }

@@ -59,32 +59,22 @@ body {
     top: 0rem;
     z-index: 20;
     margin-bottom: 5rem;
-    position: relative;
 }
 
 .top-users::after {
     content: "";
     position: absolute;
-    bottom: -40px; /* Move the bottom position down */
+    bottom: -40px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 18.8rem solid transparent; /* Adjust the width of the triangle */
-    border-right: 18.8rem solid transparent; /* Adjust the width of the triangle */
-    border-top: 40px solid #96ACC7; /* Increase the height and adjust the color of the triangle */
+    border-left: 18.8rem solid transparent;
+    border-right: 18.8rem solid transparent;
+    border-top: 40px solid #96ACC7;
 }
 
-.other-users {
-    background-color: #D6DEE8;
-    padding: 20px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    margin-top: -5rem;
-    padding-top: 3rem;
-}
-
-.users{
+.users {
     margin-top: 1rem;
 }
 
@@ -122,14 +112,61 @@ body {
 
 .top-user.user-1 {
     order: 2;
+    position: absolute;
+    top: 8px; /* Adjust this value as needed */
 }
 
 .top-user.user-2 {
     order: 1;
+    position: relative;
+    top: 5px;
+    right: 3rem;
 }
 
 .top-user.user-3 {
     order: 3;
+    position: relative;
+    top: 10px; 
+    left: 3rem;
+}
+
+
+.top-user .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -0.6rem;
+}
+
+.top-user .name-category {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.top-user .top-score {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+
+.other-users {
+    background-color: #D6DEE8;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: -5.5rem;
+    padding-top: 3rem;
+    height: calc(100vh - 20rem); /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.other-users::-webkit-scrollbar {
+    display: none; /* WebKit */
 }
 
 .other-users .user-row {
@@ -154,29 +191,25 @@ body {
     font-weight: bold;
 }
 
-.other-users .name {
+.other-users .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-grow: 1;
 }
 
+.other-users .name-category {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
 .other-users .score {
-    margin-right: 10px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
-.trend {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-}
 
-.trend.up {
-    border-bottom: 8px solid green;
-}
-
-.trend.down {
-    border-top: 8px solid red;
-}
-
-.link{
+.link {
     text-decoration: none;
 }

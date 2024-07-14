@@ -1,0 +1,119 @@
+.rewards-container {
+    max-width: 100%;
+    padding: 2rem;
+    background: linear-gradient(145deg, #547bef, #859398);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+    color: #fbf9f9;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .rewards-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .rewards-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .rewards-header h1 {
+    font-size: 3rem;
+    color: #e7d5f3;
+    animation: slideInDown 1s ease-in-out;
+  }
+  
+  .rewards-header p {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-top: 1rem;
+    animation: slideInUp 1s ease-in-out;
+  }
+  
+  .rewards-header h2 {
+    font-size: 1.5rem;
+    color: #250b4e;
+    animation: slideInUp 1s ease-in-out;
+  }
+  
+  .rewards-image {
+    margin-top: 11rem;
+    width: 80%;
+    max-width: 100%;
+    height: auto;
+    animation: fadeIn 1s ease-in-out;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reward-card {
+    background: linear-gradient(145deg, #e2e8f4, #99a1e9);
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    margin: 1rem auto;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1s ease-in-out;
+    max-width: 300px; /* Limit width for better responsiveness */
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .reward-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .reward-card h2 {
+    font-size: 2rem;
+    color: #282c34;
+    margin-bottom: 1rem;
+  }
+  
+  .reward-card p {
+    font-size: 1.2rem;
+    color: #282c34;
+    margin-bottom: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .rewards-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  
+    .rewards-list {
+      flex: 1;
+      margin-right: 2rem;
+    }
+  
+    .rewards-image {
+      order: -1; /* Position the image at the top */
+      margin-bottom: 2rem; /* Add spacing below the image */
+    }
+  }
+  

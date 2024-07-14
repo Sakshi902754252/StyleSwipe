@@ -8,6 +8,8 @@ import MediaCard from './pages/Swipe.jsx';
 import Topcategories from './pages/TopCategories.jsx';
 import Leaderboard from './pages/Leaderboard.jsx';
 import { Toaster } from 'react-hot-toast';
+import Category from "./pages/Category.jsx";
+import Rewards from './pages/Rewards.jsx';
 
 function App() {
   return (
@@ -26,12 +28,15 @@ function Main() {
       {!hideNavbar && <Navbar />}
       <Toaster />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+
+      <Route path="/" element={<LandingPage />} />
         <Route path="/upload" element={<UploadPage />} />
         <Route path="/swipe" element={<MediaCard />} />
         <Route path='/signup' element={<SignInPage/>}/>
         <Route path='/top' element={<Topcategories/>}/>
         <Route path='/leaderboard' element={<Leaderboard/>}/>
+        <Route path="/category/:categoryName" element={<Category />} />
+        <Route path="/rewards/:userId" element={<Rewards/>} />
       </Routes>
     </div>
   );
