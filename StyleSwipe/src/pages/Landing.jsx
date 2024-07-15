@@ -73,6 +73,7 @@ const MainSubtitle = styled.p`
   font-weight: bold;
   margin-bottom: 6px;
   margin-left: 0.5rem;
+  color: white;
 
   @media (max-width: 768px) {
     font-size: 20px;
@@ -86,6 +87,7 @@ const SubSubtitle = styled.p`
   max-width: 500px;
   line-height: 1.4;
   text-align: left;
+  color: white;
 
   @media (max-width: 768px) {
     font-size: 16px;
